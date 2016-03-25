@@ -1,6 +1,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    color: #707F97;    padding: 0px;
+    color: #707F97;
+    padding: 0px;
     margin: 0px;
 }
 
@@ -51,7 +52,7 @@ input[type=text] {
         width: 250px;
         position: absolute;
         top: 0px;
-        overflow: scroll;
+        overflow: auto;
         padding: 50px 30px 50px 30px;
     }
 
@@ -63,7 +64,7 @@ input[type=text] {
         height: 100%;
         position: absolute;
         width: calc(100% - 250px);
-        overflow: scroll;
+        overflow: auto;
         float: left;
     }
 }

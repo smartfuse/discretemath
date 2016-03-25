@@ -1,0 +1,44 @@
+<script type="text/javascript">
+    function submit() {
+        $.ajax({
+            url: "/find_error_encoding",
+            data: {
+                points: JSON.stringify(encodePoints($("#points").val())),
+                length: $("#length").val(),
+                modulo: $("#modulo").val()
+            },
+        }).done(function(data) {
+            var response = JSON.parse(data);
+            var output = "<div class='large'>The original sequence of numbers was " + response.coefficients.join(", ");
+            output += "</div><br/>";
+            output += "The original polynomial is: " + response.polynomial;
+            $("#results").html(output);
+            $("#results").show();
+        });
+    }
+</script>
+<div class="page-title">
+    Error Correction Decode
+</div>
+<div class="input-group">
+    <div class="label">
+        Enter the points you have. Example: (0,2) (1,3)?
+    </div>
+    <input id="points" type="text" class="wide" />
+</div>
+<div class="input-group">
+    <div class="label">
+        Enter the modulo for the points. Example: 3
+    </div>
+    <input id="modulo" type="text" class="wide" />
+</div>
+<div class="input-group">
+    <div class="label">
+        How long was the original sequence of numbers?
+    </div>
+    <input id="length" type="text" class="wide" />
+</div>
+<div class="right">
+  <button onclick="submit()" class="right">Decode</Button>
+</div>
+<div class="results-block" id="results"></div>

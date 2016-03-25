@@ -1,0 +1,44 @@
+<script type="text/javascript">
+    function submit() {
+        var numbers = $("#numbers").val().split(",");
+        for (var i = 0; i < numbers.length; i++) {
+            numbers[i] = Number(numbers[i].trim());
+        }
+        var maxErrors = Number($("#errors").val());
+        var degree = Math.max.apply(null, numbers) + numbers.length + 2 * maxErrors + 1;
+
+        $.ajax({
+            url: "/make_error_encoding",
+            data: {
+                numbers: JSON.stringify(numbers),
+                max_errors: maxErrors
+            }
+        }).done(function(data) {
+            var response = JSON.parse(data);
+            var output = "<div class='large'>Send out these points: " + formatPoints(response.points);
+            output += "</div><br/>";
+            output += "The polynomial from these points is " + response.polynomial + ". The coefficients are the numbers you wanted to send. Points are modulo " + String(degree) + ".";
+            $("#results").html(output);
+            $("#results").show();
+        });
+    }
+</script>
+<div class="page-title">
+    Error Correction Encode
+</div>
+<div class="input-group">
+    <div class="label">
+        Enter the numbers you want to send separated by commas. Example: 2, 1, 3, 4
+    </div>
+    <input id="numbers" type="text" class="wide" />
+</div>
+<div class="input-group">
+    <div class="label">
+        Enter the maximum number of errors to account for.
+    </div>
+    <input id="errors" type="text" class="wide" />
+</div>
+<div class="right">
+  <button onclick="submit()" class="right">Reveal</Button>
+</div>
+<div class="results-block" id="results"></div>

@@ -1,9 +1,11 @@
 from numpy import poly1d
 
-import sys
 import json
 import random
+import re
 
+from reedsolomon.welchberlekamp import makeEncoderDecoder
+from reedsolomon.finitefield.finitefield import FiniteField
 from flask import Flask, send_file, request, send_from_directory
 from flask.ext.heroku import Heroku
 from cStringIO import StringIO
@@ -68,6 +70,40 @@ def generate_polynomial(y_intercept, point_count):
     coefficients.append(y_intercept)
     return Polynomial(coefficients)
 
+@app.route('/make_error_encoding')
+def make_error_encoding():
+    numbers_string = request.args.get('numbers', '')
+    numbers = [int(element) for element in json.load(StringIO(numbers_string))]
+    errors = int(request.args.get('max_errors', ''))
+    total_points = len(numbers) + 2 * errors
+    modulo = max(numbers) + total_points + 1
+
+    enc, dec, solveSystem = makeEncoderDecoder(total_points, len(numbers), modulo)
+    encoded = enc(numbers)
+    polynomial = Polynomial(numbers)
+    points = [(int(point[0]), int(point[1])) for point in encoded]
+    return json.dumps({
+        "polynomial": str(polynomial),
+        "points": points
+    })
+
+@app.route('/find_error_encoding')
+def find_error_encoding():
+    points_string = request.args.get('points', '')
+    points = json.load(StringIO(points_string))
+    total_points = len(points)
+    length = int(request.args.get('length', ''))
+    modulo = int(request.args.get('modulo', ''))
+    Fp = FiniteField(modulo)
+    enc, dec, solveSystem = makeEncoderDecoder(total_points, length, modulo)
+    Q,E = solveSystem([[Fp(point[0]), Fp(point[1])] for point in points])
+    P, remainder = (Q.__divmod__(E))
+    polynomial = Polynomial([int(coefficient) for coefficient in P.coefficients])
+    return json.dumps({
+        "polynomial": str(polynomial),
+        "coefficients": polynomial.coefficients
+    })
+
 @app.route('/make_secret')
 def make_secret():
     secret = int(request.args.get('secret', ''))
@@ -120,7 +156,7 @@ def send_img(path):
 
 @app.route('/')
 def index():
-    return '<img src="image.png">'
+    return send_file('static/index.html')
 
 if __name__ == '__main__':
     app.debug = True
