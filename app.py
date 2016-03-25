@@ -1,19 +1,28 @@
-import numpy as np
-import matplotlib
-matplotlib.use('TkAgg')
+from numpy import poly1d
 
-import matplotlib.pyplot as pyplot
 import sys
 import json
 import random
 
-from scipy.interpolate import lagrange
 from flask import Flask, send_file, request, send_from_directory
 from flask.ext.heroku import Heroku
 from cStringIO import StringIO
 
 app = Flask(__name__)
 heroku = Heroku(app)
+
+def lagrange(x, w):
+    M = len(x)
+    p = poly1d(0.0)
+    for j in xrange(M):
+        pt = poly1d(w[j])
+        for k in xrange(M):
+            if k == j:
+                continue
+            fac = x[j]-x[k]
+            pt *= poly1d([1.0, -x[k]])/fac
+        p += pt
+    return p
 
 class Polynomial:
     def __init__(self, coefficients = None):
