@@ -1,0 +1,179 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #707F97;    padding: 0px;
+    margin: 0px;
+}
+
+input[type=text] {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.narrow {
+    width: 60px;
+}
+
+.wide {
+    width: 100%;
+}
+
+.sidebar {
+    background: #EFEFEF;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: auto;
+        margin-right: auto;
+        background: white;
+        padding: 50px;
+    }
+
+    .sidebar {
+        background: #F7F7F7;
+        width: 100%;
+        display: block;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar {
+        height: 100%;
+        width: 250px;
+        position: absolute;
+        top: 0px;
+        overflow: scroll;
+        padding: 50px 30px 50px 30px;
+    }
+
+    .container {
+        top: 0px;
+        left: 250px;
+        padding: 50px;
+        background: white;
+        height: 100%;
+        position: absolute;
+        width: calc(100% - 250px);
+        overflow: scroll;
+        float: left;
+    }
+}
+
+.label {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 20px;
+    color: #81ADE8;
+    margin-bottom: 30px;
+}
+
+.sidebar-title {
+    font-size: 20px;
+    color: #707F97;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.results-block {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: none;
+}
+
+button {
+    background: #7BEF9A;
+    color: white;
+    padding: 10px 15px 10px 15px;
+    border: none;
+    font-size: 16px;
+    font-family: 'Montserrat';
+    cursor: pointer;
+}
+
+button:hover {
+    background: #7FF3AE;
+}
+
+.right {
+    text-align: right;
+}
+
+.small {
+    font-size: 12px;
+    line-height: 2.0em;
+}
+
+.profile-group {
+    display: block;
+    clear: both;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 60px;
+}
+
+.profile-image {
+    float: left;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+.profile-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+}
+
+.profile-text {
+    float: left;
+    margin-left: 20px;
+    font-size: 12px;
+    display: table-cell;
+    height: 100%;
+}
+
+.profile-text > div {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sidebar > button {
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-item {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    font-size: 12px;
+    color: #81ADE8;
+    cursor: pointer;
+}
+
+.sidebar-item:hover {
+    color: #87B3ED;
+}
+
+.sidebar-item-group {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    padding-left: 20px;
+}

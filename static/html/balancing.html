@@ -1,0 +1,55 @@
+<script type="text/javascript">
+    function submit() {
+        var items = [];
+        var balanced = [];
+        var containers = 0;
+        var components = $("#total").val().split(",");
+
+        for (var i = 0; i < components.length; i++) {
+            items.push(components[i].trim());
+        }
+        var containers = Math.floor(Number($("#containers").val().trim()));
+
+        for (var i = 0; i < containers; i++) {
+            balanced[i] = Array();
+        }
+
+        for (var i = 0; i < items.length; i++) {
+            var container = items[i].hashCode() % containers;
+            balanced[container].push("\"" + items[i].trim() + "\"");
+        }
+
+        var output = "";
+        for (var i = 0; i < containers; i++) {
+            var itemString = balanced[i].length > 0 ? (" contains " + balanced[i].join(", ")) : " is empty";
+            output += "Container " + String(i + 1) + itemString;
+            if (i < containers - 1) {
+                output += "<br/><br/>"
+            }
+        }
+        $("#results").html(output);
+        $("#results").show();
+    }
+</script>
+<div class="page-title">
+    Balance Items
+</div>
+<div class="input-group">
+    <div class="label">
+        How many containers are there?
+    </div>
+    <input id="containers" type="text" class="narrow" />
+</div>
+<div class="input-group">
+    <div class="label">
+        Enter name of each item, separating them by commas. Example: red ball, green ball, orange ball
+    </div>
+    <input id="total" type="text" class="wide" />
+</div>
+<div class="right">
+  <button onclick="submit()" class="right">Balance</Button>
+</div>
+<div class="results-block" id="results"></div>
+<br/>
+How does balancing work?<br/><br/>
+<div class="small">Given each item, we have a "hashing" algorithm that maps text to integers evenly. We then mod it by the number of containers to assign it a container.</div>
