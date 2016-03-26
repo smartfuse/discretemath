@@ -155,7 +155,7 @@ button:hover {
     transform: translateY(-50%);
 }
 
-.sidebar > button {
+.sidebar button {
     width: 100%;
     text-align: center;
 }
@@ -177,4 +177,8 @@ button:hover {
     margin-top: 30px;
     margin-bottom: 40px;
     padding-left: 20px;
+}
+
+pre {
+    font-size: 12px;
 }
