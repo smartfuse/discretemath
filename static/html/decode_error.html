@@ -9,9 +9,9 @@
             },
         }).done(function(data) {
             var response = JSON.parse(data);
-            var output = "<div class='large'>The original sequence of numbers was " + response.coefficients.join(", ");
+            var output = "<div class='large'>The original sequence of numbers was " + response.coefficients.join(", ") + ".";
             output += "</div><br/>";
-            output += "The original polynomial is: " + response.polynomial;
+            output += "The original polynomial is " + response.polynomial + ".";
             $("#results").html(output);
             $("#results").show();
         });

@@ -13,6 +13,18 @@ from cStringIO import StringIO
 app = Flask(__name__)
 heroku = Heroku(app)
 
+def find_next_prime(n):
+    return find_prime_in_range(n, 2*n)
+
+def find_prime_in_range(a, b):
+    for p in range(a, b):
+        for i in range(2, p):
+            if p % i == 0:
+                break
+        else:
+            return p
+    return None
+
 def lagrange(x, w):
     M = len(x)
     p = poly1d(0.0)
@@ -76,7 +88,7 @@ def make_error_encoding():
     numbers = [int(element) for element in json.load(StringIO(numbers_string))]
     errors = int(request.args.get('max_errors', ''))
     total_points = len(numbers) + 2 * errors
-    modulo = max(numbers) + total_points + 1
+    modulo = find_next_prime(max(numbers) + total_points + 1)
 
     enc, dec, solveSystem = makeEncoderDecoder(total_points, len(numbers), modulo)
     encoded = enc(numbers)
@@ -84,7 +96,8 @@ def make_error_encoding():
     points = [(int(point[0]), int(point[1])) for point in encoded]
     return json.dumps({
         "polynomial": str(polynomial),
-        "points": points
+        "points": points,
+        "modulo": modulo
     })
 
 @app.route('/find_error_encoding')

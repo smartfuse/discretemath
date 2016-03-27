@@ -5,7 +5,6 @@
             numbers[i] = Number(numbers[i].trim());
         }
         var maxErrors = Number($("#errors").val());
-        var degree = Math.max.apply(null, numbers) + numbers.length + 2 * maxErrors + 1;
 
         $.ajax({
             url: "/make_error_encoding",
@@ -15,9 +14,10 @@
             }
         }).done(function(data) {
             var response = JSON.parse(data);
+            console.log(response);
             var output = "<div class='large'>Send out these points: " + formatPoints(response.points);
             output += "</div><br/>";
-            output += "The polynomial from these points is " + response.polynomial + ". The coefficients are the numbers you wanted to send. Points are modulo " + String(degree) + ".";
+            output += "The polynomial from these points is " + response.polynomial + ". The coefficients are the numbers you wanted to send. The points are modulo " + response.modulo + ".";
             $("#results").html(output);
             $("#results").show();
         });
