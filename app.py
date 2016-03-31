@@ -168,7 +168,8 @@ def send_img(path):
     return send_from_directory('static/img', path)
 
 @app.route('/')
-def index():
+@app.errorhandler(404)
+def index(*args):
     return send_file('static/index.html')
 
 if __name__ == '__main__':

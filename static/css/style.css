@@ -88,6 +88,8 @@ input[type=text] {
     color: #FFFFFF;
     margin-bottom: 20px;
     cursor: pointer;
+    display: block;
+    text-decoration: none;
 }
 
 .results-block {
@@ -166,6 +168,8 @@ button:hover {
     font-size: 12px;
     color: #FFFFFF;
     cursor: pointer;
+    display: block;
+    text-decoration: none;
 }
 
 .sidebar-item:hover {

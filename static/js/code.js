@@ -26,9 +26,8 @@ function runit() {
        return Sk.importMainWithBody("<stdin>", false, prog, true);
    });
    myPromise.then(function(mod) {
-       console.log('success');
    },
        function(err) {
-       console.log(err.toString());
+       outf(err.toString());
    });
 }
